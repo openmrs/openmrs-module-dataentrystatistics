@@ -7,3 +7,14 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+/.settings
+/.project
+/.classpath
+.DS_Store

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- Beans to add to the current Application context definition -->
+  
+<beans>
+
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>@MODULE_PACKAGE@.DataEntryStatisticService</value> 
+				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+					<property name="transactionManager"><ref bean="transactionManager"/></property>
+					<property name="target">
+						<bean class="@MODULE_PACKAGE@.impl.DataEntryStatisticServiceImpl">
+							<property name="dao">
+								<bean class="@MODULE_PACKAGE@.db.hibernate.HibernateDataEntryStatisticDAO">
+									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
+								</bean>
+							</property>	
+						</bean>
+					</property>
+					<property name="preInterceptors">
+						<list>
+							<ref bean="authorizationInterceptor"/>
+						</list>
+					</property>
+					<property name="transactionAttributeSource">
+						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>	
+
+	<bean id="dataEntryStatisticsUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="module/dataentrystatistics/dataEntryStatistics.list">dataEntryStatisticsController</prop>
+			</props>
+		</property>
+	</bean>
+		
+	<bean id="dataEntryStatisticsController" class="org.openmrs.module.dataentrystatistics.web.controller.DataEntryStatisticsController">
+		<property name="sessionForm"><value>true</value></property>
+		<property name="commandName"><value>command</value></property>
+		<property name="formView"><value>/module/dataentrystatistics/dataEntryStatistics</value></property>
+		<property name="successView"><value>dataEntryStatistics.list</value></property>
+	</bean>
+
+</beans>
