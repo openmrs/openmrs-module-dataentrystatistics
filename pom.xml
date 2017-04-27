@@ -14,7 +14,7 @@
 	<scm>
 		<connection>scm:git:git@github.com:openmrs/openmrs-module-dataentrystatistics.git</connection>
                <developerConnection>scm:git:git@github.com:openmrs/openmrs-module-dataentrystatistics.git</developerConnection>
-               <url>https://github.com/openmrs/openmrs-module-dataentrystatistics.git</url>
+               <url>https://github.com/openmrs/openmrs-module-dataentrystatistics</url>
 	</scm>
 
 	<modules>
