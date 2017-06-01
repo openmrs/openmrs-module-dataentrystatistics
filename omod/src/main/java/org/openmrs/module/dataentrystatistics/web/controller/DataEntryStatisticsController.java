@@ -117,7 +117,7 @@ public class DataEntryStatisticsController extends SimpleFormController {
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
 		super.initBinder(request, binder);
 		
-		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(OpenmrsUtil.getDateFormat(), true, 10));
+		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(OpenmrsUtil.getDateFormat(Context.getLocale()), true, 10));
 	}
 	
 	protected Object formBackingObject(HttpServletRequest request) throws ServletException {
@@ -132,7 +132,7 @@ public class DataEntryStatisticsController extends SimpleFormController {
 		ret.setFromDate(c.getTime());
 		ret.setToDate(null);
 		
-		Date toDateToUse = OpenmrsUtil.lastSecondOfDay(ret.getToDate());
+		Date toDateToUse = ret.getToDate() != null ? OpenmrsUtil.getLastMomentOfDay(ret.getToDate()) : null;
 		String encUserColumn = ret.getEncUserColumn();
 		String orderUserColumn = ret.getOrderUserColumn();
 		List<DataEntryStatistic> stats = svc.getDataEntryStatistics(ret.getFromDate(),
@@ -149,7 +149,7 @@ public class DataEntryStatisticsController extends SimpleFormController {
 		DataEntryStatisticService svc = (DataEntryStatisticService) Context.getService(DataEntryStatisticService.class);
 		
 		StatisticsCommand command = (StatisticsCommand) commandObj;
-		Date toDateToUse = OpenmrsUtil.lastSecondOfDay(command.getToDate());
+		Date toDateToUse = command.getToDate() != null ? OpenmrsUtil.getLastMomentOfDay(command.getToDate()) : null;
 		String encUserColumn = command.getEncUserColumn();
 		String orderUserColumn = command.getOrderUserColumn();
 		List<DataEntryStatistic> stats = svc.getDataEntryStatistics(command.getFromDate(),

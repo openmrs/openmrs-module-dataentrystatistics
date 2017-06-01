@@ -13,6 +13,7 @@
  */
 package org.openmrs.module.dataentrystatistics.db.hibernate;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -93,7 +94,7 @@ public class HibernateDataEntryStatisticDAO implements DataEntryStatisticDAO {
 		if (groupBy.length() > 0)
 			hql += groupBy + " ";
 		hql += "e." + encounterColumn + ", e.encounterType, e.form ";
-		Query q = sessionFactory.getCurrentSession().createQuery(hql);
+		Query q = getCurrentSession().createQuery(hql);
 		if (fromDate != null)
 			q.setParameter("fromDate", fromDate);
 		if (toDate != null)
@@ -156,7 +157,7 @@ public class HibernateDataEntryStatisticDAO implements DataEntryStatisticDAO {
 		hql += " o.voided = :voided ";
 		
 		hql += "group by o." + orderColumn + ", o.orderType.name ";
-		q = sessionFactory.getCurrentSession().createQuery(hql);
+		q = getCurrentSession().createQuery(hql);
 		if (fromDate != null)
 			q.setParameter("fromDate", fromDate);
 		if (toDate != null)
@@ -193,5 +194,25 @@ public class HibernateDataEntryStatisticDAO implements DataEntryStatisticDAO {
 	 */
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+	
+	/**
+	 * Gets the current hibernate session while taking care of the hibernate 3 and 4 differences.
+	 * 
+	 * @return the current hibernate session.
+	 */
+	private org.hibernate.Session getCurrentSession() {
+		try {
+			return sessionFactory.getCurrentSession();
+		}
+		catch (NoSuchMethodError ex) {
+			try {
+				Method method = sessionFactory.getClass().getMethod("getCurrentSession", null);
+				return (org.hibernate.Session)method.invoke(sessionFactory, null);
+			}
+			catch (Exception e) {
+				throw new RuntimeException("Failed to get the current hibernate session", e);
+			}
+		}
 	}
 }
