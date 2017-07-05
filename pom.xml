@@ -5,7 +5,7 @@
 	<artifactId>dataentrystatistics</artifactId>
 	<version>1.5.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Entry Statistics</name>
+	<name>Data Entry Statistics</name>
 	<description>Parent project for Data Entry Statistics</description>
 
 	<url>http://openmrs.org</url>
