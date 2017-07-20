@@ -18,7 +18,7 @@
 	<require_version>1.6.0.11652</require_version>
 	
 	<aware_of_modules>
-	    <aware_of_module>org.openmrs.module.legacyui</aware_of_module>
+		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
 	
 	<!-- Extensions -->
@@ -27,7 +27,7 @@
 		<point>org.openmrs.admin.maintenance.localHeader</point>
 		<class>@MODULE_PACKAGE@.extension.html.AdminList</class>
 	</extension>
-
+	
 	<!-- Internationalization -->
 	
 	<privilege>
@@ -47,6 +47,5 @@
 		<lang>it</lang>
 		<file>messages_it.properties</file>
 	</messages>
-	
-</module>
 
+</module>
