@@ -18,8 +18,6 @@
   		    http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 <!-- Beans to add to the current Application context definition -->
-  
-<beans>
 
 	<bean parent="serviceContext">
 		<property name="moduleService">
