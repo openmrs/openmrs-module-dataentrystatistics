@@ -67,7 +67,13 @@ public class HibernateDataEntryStatisticDAO implements DataEntryStatisticDAO {
 		log.debug("GROUP BY IS " + groupBy);
 		
 		String hql = "select " + groupBy + "e." + encounterColumn + ", e.encounterType"
-		        + ", e.form, count(distinct e.encounterId), count(o.obsId) " + "from Obs o right join o.encounter as e ";
+				+ ", e.form, count(distinct e.encounterId), count(o.obsId) " + "from Obs o right join o.encounter as e ";
+
+		if(encounterColumn.equals("provider")) {
+			hql = "select " + groupBy + "p.person"  + ", e.encounterType"
+					+ ", e.form, count(distinct e.encounterId), count(o.obsId) " + "from Obs o right join o.encounter as e inner join e.encounterProviders as ep inner join ep.provider as p ";
+		}
+
 		if (fromDate != null || toDate != null) {
 			String s = "where ";
 			if (fromDate != null)
@@ -93,7 +99,11 @@ public class HibernateDataEntryStatisticDAO implements DataEntryStatisticDAO {
 		hql += "group by ";
 		if (groupBy.length() > 0)
 			hql += groupBy + " ";
-		hql += "e." + encounterColumn + ", e.encounterType, e.form ";
+		if(encounterColumn.equals("provider")) {
+			hql += "p.person"  + ", e.encounterType, e.form ";
+		}else {
+			hql += "e." + encounterColumn + ", e.encounterType, e.form ";
+		}
 		Query q = getCurrentSession().createQuery(hql);
 		if (fromDate != null)
 			q.setParameter("fromDate", fromDate);
