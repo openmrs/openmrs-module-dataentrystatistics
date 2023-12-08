@@ -1,6 +1,9 @@
 package org.openmrs.module.dataentrystatistics.web.resource;
 
+
 import org.openmrs.Person;
+import org.openmrs.PersonAddress;
+import org.openmrs.PersonAttribute;
 import org.openmrs.PersonName;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
@@ -42,7 +45,7 @@ public class DataEntryStatisticsResource {
             Date fromDate = parseYmd(fromDateString);
             Date toDate = parseYmd(toDateString);
 
-            DataEntryStatisticService svc = (DataEntryStatisticService) Context.getService(DataEntryStatisticService.class);
+            DataEntryStatisticService svc =  Context.getService(DataEntryStatisticService.class);
 
             List<DataEntryStatistic> stats = svc.getDataEntryStatistics(fromDate,
                     toDate, encUserColumn, orderUserColumn, groupBy);
@@ -71,9 +74,15 @@ public class DataEntryStatisticsResource {
 
     public List<DataEntryStatisticMapper> convertDataEntryStaticsForJsonMapping(List<DataEntryStatistic> dataEntryStatistics) {
 
-        List<DataEntryStatisticMapper> dataList = new ArrayList<DataEntryStatisticMapper>(dataEntryStatistics.size());
+        List<DataEntryStatisticMapper> dataList = new ArrayList<DataEntryStatisticMapper>();
         for (DataEntryStatistic dataEntryStatistic : dataEntryStatistics) {
-            String fullName = dataEntryStatistic.getUser().getPersonName().getFullName();
+            Person person = dataEntryStatistic.getUser();
+            String fullName ="";
+            String person_uuid ="";
+            if(person.getPersonName()!=null){
+               fullName = person.getPersonName().getFullName();
+               person_uuid = person.getUuid();
+            }
             String entryType = dataEntryStatistic.getEntryType();
             int numberOfEntries = dataEntryStatistic.getNumberOfEntries();
             int numberOfObs = dataEntryStatistic.getNumberOfObs();
@@ -83,7 +92,7 @@ public class DataEntryStatisticsResource {
                 groupBy = groupedBy.toString();
             }
 
-            DataEntryStatisticMapper mapper = new DataEntryStatisticMapper(fullName, entryType, numberOfEntries, numberOfObs, groupBy);
+            DataEntryStatisticMapper mapper = new DataEntryStatisticMapper(fullName,person_uuid, entryType, numberOfEntries, numberOfObs, groupBy);
             dataList.add(mapper);
 
         }

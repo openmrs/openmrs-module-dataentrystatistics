@@ -2,7 +2,9 @@ package org.openmrs.module.dataentrystatistics.web.resource.mapper;
 
 public class DataEntryStatisticMapper {
 
-    private String  userFullName;
+    private String personUuid;
+
+    private String fullName;
 
     private String entryType;
 
@@ -13,8 +15,9 @@ public class DataEntryStatisticMapper {
     private String groupBy ;
 
 
-    public DataEntryStatisticMapper(String userFullName, String entryType, Integer numberOfEntries, Integer numberOfObs, String groupBy) {
-        this.userFullName = userFullName;
+    public DataEntryStatisticMapper(String fullName, String personUuid, String entryType, Integer numberOfEntries, Integer numberOfObs, String groupBy) {
+        this.fullName = fullName;
+        this.personUuid = personUuid;
         this.entryType = entryType;
         this.numberOfEntries = numberOfEntries;
         this.numberOfObs = numberOfObs;
@@ -24,12 +27,12 @@ public class DataEntryStatisticMapper {
     public DataEntryStatisticMapper() {
     }
 
-    public String getUserFullName() {
-        return userFullName;
+    public String getPersonUuid() {
+        return personUuid;
     }
 
-    public void setUserFullName(String userFullName) {
-        this.userFullName = userFullName;
+    public void setPersonUuid(String personUuid) {
+        this.personUuid = personUuid;
     }
 
     public String getEntryType() {
@@ -62,5 +65,13 @@ public class DataEntryStatisticMapper {
 
     public void setGroupBy(String groupBy) {
         this.groupBy = groupBy;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }
