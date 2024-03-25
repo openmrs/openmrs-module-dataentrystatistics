@@ -2,9 +2,6 @@ package org.openmrs.module.dataentrystatistics.web.resource;
 
 
 import org.openmrs.Person;
-import org.openmrs.PersonAddress;
-import org.openmrs.PersonAttribute;
-import org.openmrs.PersonName;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.dataentrystatistics.DataEntryStatistic;
@@ -14,20 +11,25 @@ import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import org.openmrs.module.webservices.rest.web.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 
 @Controller
-@RequestMapping(value = "/rest/" + RestConstants.VERSION_1 + "/dataentrystatistics")
+@Resource(name = "/rest/" + RestConstants.VERSION_1 + "/dataentrystatistics",supportedClass = DataEntryStatistic.class,supportedOpenmrsVersions = {"1.9.* - 9.*"})
 
 public class DataEntryStatisticsResource {
-
     @ExceptionHandler(APIAuthenticationException.class)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
