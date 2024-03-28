@@ -20,7 +20,10 @@
 	<aware_of_modules>
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
-	
+
+	<require_module version="${webservices.restModuleVersion}">
+		org.openmrs.module.webservices
+	</require_module>
 	<!-- Module Activator -->
 	<activator>${project.parent.groupId}.${project.parent.artifactId}.ModuleActivator</activator>
 	
