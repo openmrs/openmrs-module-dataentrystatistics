@@ -72,11 +72,25 @@
 				<type>pom</type>
 				<scope>test</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>webservices.rest-omod-common</artifactId>
+				<version>${webservices.restModuleVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>webservices.rest-omod-common</artifactId>
+				<version>${webservices.restModuleVersion}</version>
+				<scope>provided</scope>
+				<type>test-jar</type>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<properties>
 		<openMRSVersion>1.9.9</openMRSVersion>
+		<webservices.restModuleVersion>2.28.0</webservices.restModuleVersion>
 	</properties>
 
 	<build>
@@ -86,8 +100,8 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<target>1.6</target>
-						<source>1.6</source>
+						<target>8</target>
+						<source>8</source>
 					</configuration>
 				</plugin>
 				<plugin>
